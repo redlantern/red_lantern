@@ -1,6 +1,7 @@
 RedLantern::Application.routes.draw do
   resources :tickets
 
+  root :to => "tickets#index"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
