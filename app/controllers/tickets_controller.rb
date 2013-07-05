@@ -1,13 +1,21 @@
 class TicketsController < ApplicationController
   # GET /tickets
   # GET /tickets.json
-  def index
-    @tickets = Ticket.all
+  require 'mail'
+  skip_before_filter :verify_authenticity_token
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @tickets }
-    end
+  SECRET = ENV['CLOUDMAILIN_SECRET'] || '24767c09641221bb0aca'
+
+  def index
+  
+    message = Mail.new(params[:message])
+    render text: message.subject
+    # @tickets = Ticket.all
+
+    # respond_to do |format|
+    #   format.html # index.html.erb
+    #   format.json { render json: @tickets }
+    # end
   end
 
   # GET /tickets/1

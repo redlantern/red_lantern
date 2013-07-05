@@ -1,5 +1,6 @@
 RedLantern::Application.routes.draw do
   resources :tickets
+  resources :incoming_mail
 
   root :to => "tickets#index"
 
