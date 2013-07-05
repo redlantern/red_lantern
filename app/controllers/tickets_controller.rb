@@ -7,9 +7,9 @@ class TicketsController < ApplicationController
   SECRET = ENV['CLOUDMAILIN_SECRET'] || '24767c09641221bb0aca'
 
   def index
-  
-    message = Mail.new(params[:message])
-    render text: message.subject
+
+    @ticket = InboundController.create
+
     # @tickets = Ticket.all
 
     # respond_to do |format|
