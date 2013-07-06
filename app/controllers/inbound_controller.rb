@@ -27,6 +27,7 @@ class InboundController < ApplicationController
     if ticket.save
       head :ok # return http status 200 - ok
     else
+      Rails.logger.info ticket.inspect
       head :internal_server_error # return http status 500 - internal server error
     end
   end
