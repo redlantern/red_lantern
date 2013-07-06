@@ -11,10 +11,7 @@ class InboundController < ApplicationController
   skip_before_filter :verify_authenticity_token
 
   def create #not sure if it should be a class method??
-    
-
-    
-
+    Rails.logger.info params.inspect
 
     # parse incoming mail    
     message = Mail.new(params[:message])
