@@ -18,15 +18,16 @@ class InboundController < ApplicationController
     # todo save ticket
     
     message = Mail.new(params[:message])
+    self.new.map_mail
 
-    # return head :ok to tell couldmailin that we did everything successfully
+    # return head :ok to tell cloudmailin that we did everything successfully
     head :ok # return http status 200 - ok
   end
 
   def initialize
-     @from = Rails.logger.info params[:headers]['From']
-     @subject = Rails.logger.info params[:headers]['Subject']
-     @body = Rails.logger.info params[:plain]  
+     @from = 'daphne@rails.com' #Rails.logger.info params[:headers]['From']
+     @subject = 'Problem with app' #Rails.logger.info params[:headers]['Subject']
+     @body = 'My app shuts down unexpectedly. Please fix it ASAP'#Rails.logger.info params[:plain]  
   end
 
 
