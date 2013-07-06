@@ -7,7 +7,7 @@ class TicketsController < ApplicationController
   SECRET = ENV['CLOUDMAILIN_SECRET'] || '24767c09641221bb0aca'
 
   def index
-
+    binding.pry
     @ticket = InboundController.create
 
     # @tickets = Ticket.all

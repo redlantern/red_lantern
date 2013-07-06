@@ -7,6 +7,8 @@
 
 class InboundController < ApplicationController
   require 'mail'
+  attr_reader :from, :subject, :body
+
   skip_before_filter :verify_authenticity_token
   SECRET = ENV['CLOUDMAILIN_SECRET'] || '24767c09641221bb0aca'
 
@@ -16,30 +18,27 @@ class InboundController < ApplicationController
     # todo save ticket
     
     message = Mail.new(params[:message])
-    parse_mail = parse_mail message
-
 
     # return head :ok to tell couldmailin that we did everything successfully
     head :ok # return http status 200 - ok
   end
 
+  def initialize
+     @from = Rails.logger.info params[:headers]['From']
+     @subject = Rails.logger.info params[:headers]['Subject']
+     @body = Rails.logger.info params[:plain]  
+  end
+
 
 private
-
-    def parse_mail(message)
-      @from = Rails.logger.info params[:headers]['From']
-      @subject = Rails.logger.info params[:headers]['Subject']
-      @body = Rails.logger.info params[:plain]
-      map_mail = map_mail
-    end
-    
+  
     def map_mail
       #future enhancement: check if ticket exists, then update accordingly
 
       ticket = Ticket.new
-      ticket.sender = @from 
-      ticket.subject = @subject
-      ticket.body = @body
+      ticket.sender = from 
+      ticket.subject = subject
+      ticket.body = body
     end
     
 end

@@ -4,6 +4,8 @@ RedLantern::Application.routes.draw do
 
   root :to => "tickets#index"
 
+  match "/inbound" => "inbound#create"
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
