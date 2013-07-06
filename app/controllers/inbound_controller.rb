@@ -11,19 +11,31 @@ class InboundController < ApplicationController
   skip_before_filter :verify_authenticity_token
 
   def create #not sure if it should be a class method??
-    # todo parse incoming mail
-    # todo match mail to ticket
-    # todo save ticket
     
-    #message = Mail.new(params[:message])
-    #self.new.map_mail
 
-    # return head :ok to tell cloudmailin that we did everything successfully
-    head 404#:ok # return http status 200 - ok
+    
+
+
+    # parse incoming mail    
+    message = Mail.new(params[:message])
+    ticket = Ticket.new(
+      sender: message.from, 
+      subject: message.subject, 
+      body: message.body
+    )
+    
+    # todo match mail to ticket
+
+    # save ticket
+    if ticket.save
+      head :ok # return http status 200 - ok
+    else
+      head :internal_server_error # return http status 500 - internal server error
+    end
   end
 
   def initialize
-     @from = 'daphne@rails.com' #Rails.logger.info params[:headers]['From']
+     @sender = 'daphne@rails.com' #Rails.logger.info params[:headers]['From']
      @subject = 'Problem with app' #Rails.logger.info params[:headers]['Subject']
      @body = 'My app shuts down unexpectedly. Please fix it ASAP'#Rails.logger.info params[:plain]  
   end
