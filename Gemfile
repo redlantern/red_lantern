@@ -9,6 +9,7 @@ gem 'pg'
 gem 'mail'
 
 group :development, :test do
+	gem 'quiet_assets'
 	gem 'pry'
 end
 
