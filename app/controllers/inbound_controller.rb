@@ -7,26 +7,34 @@
 
 class InboundController < ApplicationController
   require 'mail'
-  attr_reader :from, :subject, :body
 
   skip_before_filter :verify_authenticity_token
-  SECRET = ENV['CLOUDMAILIN_SECRET'] || '24767c09641221bb0aca'
 
-  def self.create #not sure if it should be a class method??
-    # todo parse incoming mail
-    # todo match mail to ticket
-    # todo save ticket
-    
+  def create #not sure if it should be a class method??
+    Rails.logger.info params.inspect
+
+    # parse incoming mail    
     message = Mail.new(params[:message])
+    ticket = Ticket.new(
+      sender: message.from, 
+      subject: message.subject, 
+      body: message.body
+    )
+    
+    # todo match mail to ticket
 
-    # return head :ok to tell couldmailin that we did everything successfully
-    head :ok # return http status 200 - ok
+    # save ticket
+    if ticket.save
+      head :ok # return http status 200 - ok
+    else
+      head :internal_server_error # return http status 500 - internal server error
+    end
   end
 
   def initialize
-     @from = Rails.logger.info params[:headers]['From']
-     @subject = Rails.logger.info params[:headers]['Subject']
-     @body = Rails.logger.info params[:plain]  
+     @sender = 'daphne@rails.com' #Rails.logger.info params[:headers]['From']
+     @subject = 'Problem with app' #Rails.logger.info params[:headers]['Subject']
+     @body = 'My app shuts down unexpectedly. Please fix it ASAP'#Rails.logger.info params[:plain]  
   end
 
 
