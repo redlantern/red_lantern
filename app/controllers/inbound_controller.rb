@@ -16,9 +16,9 @@ class InboundController < ApplicationController
     # parse incoming mail    
     message = Mail.new(params[:message])
     ticket = Ticket.new(
-      sender: message.from, 
-      subject: message.subject, 
-      body: message.body
+      sender: params[:headers]['From'],#message.envelope.from, 
+      subject: params[:headers]['Subject'],#message.subject, 
+      body: params[:plain]#message.body
     )
     
     # todo match mail to ticket
@@ -27,7 +27,7 @@ class InboundController < ApplicationController
     if ticket.save
       head :ok # return http status 200 - ok
     else
-      Rails.logger.info ticket.inspect
+      Rails.logger.info ticket.errors.inspect
       head :internal_server_error # return http status 500 - internal server error
     end
   end
@@ -35,7 +35,7 @@ class InboundController < ApplicationController
   def initialize
      @sender = 'daphne@rails.com' #Rails.logger.info params[:headers]['From']
      @subject = 'Problem with app' #Rails.logger.info params[:headers]['Subject']
-     @body = 'My app shuts down unexpectedly. Please fix it ASAP'#Rails.logger.info params[:plain]  
+     @body = 'My app shuts down unexpectedly. Please fix it ASAP'#Rails.logger.info params[:plain]
   end
 
 
