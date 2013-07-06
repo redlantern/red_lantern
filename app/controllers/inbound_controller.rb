@@ -7,21 +7,19 @@
 
 class InboundController < ApplicationController
   require 'mail'
-  attr_reader :from, :subject, :body
 
   skip_before_filter :verify_authenticity_token
-  SECRET = ENV['CLOUDMAILIN_SECRET'] || '24767c09641221bb0aca'
 
-  def self.create #not sure if it should be a class method??
+  def create #not sure if it should be a class method??
     # todo parse incoming mail
     # todo match mail to ticket
     # todo save ticket
     
-    message = Mail.new(params[:message])
-    self.new.map_mail
+    #message = Mail.new(params[:message])
+    #self.new.map_mail
 
     # return head :ok to tell cloudmailin that we did everything successfully
-    head :ok # return http status 200 - ok
+    head 404#:ok # return http status 200 - ok
   end
 
   def initialize
