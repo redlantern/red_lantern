@@ -8,7 +8,6 @@ class Ticket < ActiveRecord::Base
   before_validation :set_defaults
 
   after_create :alert_users_create
-  after_update :alert_users_update
 
   private
 
@@ -20,7 +19,4 @@ class Ticket < ActiveRecord::Base
   	UserMailer.new_ticket_created(self.id).deliver
   end
 
-  def alert_users_update
-    UserMailer.ticket_updated(self.id).deliver
-  end
 end
