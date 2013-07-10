@@ -11,23 +11,35 @@ class InboundController < ApplicationController
 
   def create #not sure if it should be a class method??
     Rails.logger.info params.inspect
+binding.pry
+    if params[:headers]['From'].start_with?("Ticket")
+      get_ticket_id(params[:headers]['From'])
+      ticket = Ticket.find @ticket_id
+      ticket.replies.create(sender: ticket.sender, body: ticket.body)
 
-    # parse incoming mail    
-    # message = Mail.new(params[:message])
-    ticket = Ticket.new(
-      sender: params[:headers]['From'], 
-      subject: params[:headers]['Subject'], 
-      body: params[:plain]
-    )
-    
-    # todo match mail to ticket
-    # save ticket
-    if ticket.save
-      head :ok # return http status 200 - ok
     else
-      Rails.logger.info ticket.errors.inspect
-      head :internal_server_error # return http status 500 - internal server error
+      ticket = Ticket.new(
+        sender: params[:headers]['From'], 
+        subject: params[:headers]['Subject'], 
+        body: params[:plain]
+      )
+    
+        if ticket.save
+          head :ok # return http status 200 - ok
+        else
+          Rails.logger.info ticket.errors.inspect
+          head :internal_server_error # return http status 500 - internal server error
+        end
     end
+
+    private
+
+    def get_ticket_id sender
+      partial = sender.split('@')[0]
+      @ticket_id = partial.split('+')[1]
+
+    end
+
   end
 
     
