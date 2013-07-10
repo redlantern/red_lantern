@@ -15,7 +15,7 @@ class InboundController < ApplicationController
     # sender1 = "Ticket+68@redlantern.com"
     # if sender1.start_with?("Ticket")
 
-    if params[:headers]['From'].start_with?("Ticket")
+    if params[:headers]['From'].start_with?("Ticket") && params[:headers]['From'].end_with?("laantern.com")
       get_ticket_id(params[:headers]['From'])
       # get_ticket_id(sender1)
       @ticket = Ticket.find @ticket_id
@@ -32,12 +32,12 @@ class InboundController < ApplicationController
         subject: params[:headers]['Subject'], 
         body: params[:plain]
       )
-        if ticket.save
-          head :ok # return http status 200 - ok
-        else
-          Rails.logger.info ticket.errors.inspect
-          head :internal_server_error # return http status 500 - internal server error
-        end
+      if ticket.save
+        head :ok # return http status 200 - ok
+      else
+        Rails.logger.info ticket.errors.inspect
+        head :internal_server_error # return http status 500 - internal server error
+      end
     end
 
   end
