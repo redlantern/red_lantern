@@ -2,10 +2,8 @@ class UserMailer < ActionMailer::Base
   default to: SUPPORT_TEAM
 
   def new_ticket_created ticket_id
-
   	@ticket = Ticket.find ticket_id
     mail(from: sender_email_for(@ticket), subject: "Ticket ##{@ticket.id}: #{@ticket.subject}")
-
   end
 
   private

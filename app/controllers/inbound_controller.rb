@@ -11,11 +11,20 @@ class InboundController < ApplicationController
 
   def create #not sure if it should be a class method??
     Rails.logger.info params.inspect
-binding.pry
+
+    # sender1 = "Ticket+68@redlantern.com"
+    # if sender1.start_with?("Ticket")
+
     if params[:headers]['From'].start_with?("Ticket")
       get_ticket_id(params[:headers]['From'])
-      ticket = Ticket.find @ticket_id
-      ticket.replies.create(sender: ticket.sender, body: ticket.body)
+      # get_ticket_id(sender1)
+      @ticket = Ticket.find @ticket_id
+      
+      if @ticket.replies.create(sender: @ticket.sender, body: @ticket.body)
+        head :ok
+      else
+        Rails.logger.info ticket.errors.inspect
+      end
 
     else
       ticket = Ticket.new(
@@ -23,7 +32,6 @@ binding.pry
         subject: params[:headers]['Subject'], 
         body: params[:plain]
       )
-    
         if ticket.save
           head :ok # return http status 200 - ok
         else
@@ -32,13 +40,13 @@ binding.pry
         end
     end
 
-    private
+  end
 
-    def get_ticket_id sender
-      partial = sender.split('@')[0]
-      @ticket_id = partial.split('+')[1]
+  private
 
-    end
+  def get_ticket_id sender
+    partial = sender.split('@')[0]
+    @ticket_id = partial.split('+')[1]
 
   end
 
