@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130703105109) do
+ActiveRecord::Schema.define(:version => 20130710015457) do
 
   create_table "posts", :force => true do |t|
     t.text     "body"
@@ -19,6 +19,16 @@ ActiveRecord::Schema.define(:version => 20130703105109) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "replies", :force => true do |t|
+    t.integer  "ticket_id"
+    t.string   "sender"
+    t.text     "body"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "replies", ["ticket_id"], :name => "index_replies_on_ticket_id"
 
   create_table "tickets", :force => true do |t|
     t.string   "sender"
