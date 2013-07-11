@@ -11,7 +11,7 @@ private
   end
 
   def set_status
-	ticket.status = "Work in progress"	
+	ticket.status = STATUS_WORK	
 	ticket.save!
   end
 

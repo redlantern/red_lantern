@@ -12,7 +12,7 @@ class Ticket < ActiveRecord::Base
   private
 
   def set_defaults
-  	self.status = 'new' if self.status.blank?
+  	self.status = STATUS_NEW if self.status.blank?
   end
 
   def alert_users_create
