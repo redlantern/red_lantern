@@ -3,4 +3,4 @@ SUPPORT_TEAM = 	"yiingshan@gmail.com, chris@codesoda.com, rachelle.lequesne@gmai
 SENDER_CUSTOMER = "support@redlantern.com"
 
 STATUS_NEW = "New"
-STATUS_WORK = "Work in progress"
+STATUS_WORK = "Working"

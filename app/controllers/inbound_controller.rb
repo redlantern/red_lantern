@@ -12,10 +12,10 @@ class InboundController < ApplicationController
   def create
     Rails.logger.info params.inspect
 
-    # sender1 = "Ticket+70@redlantern.com"
+    # sender1 = "Ticket+70@laantern.com"
     # if sender1.start_with?("Ticket")
 
-    if params[:headers]['From'].start_with?("Ticket")
+    if params[:headers]['From'].start_with?("Ticket") && params[:headers]['From'].end_with?("laantern.com")
       get_ticket_id(params[:headers]['From'])
       # get_ticket_id(sender1)
       @ticket = Ticket.find @ticket_id
@@ -27,16 +27,13 @@ class InboundController < ApplicationController
         subject: params[:headers]['Subject'], 
         body: params[:plain]
       )
-       
        begin
         ticket.save
         head :ok # return http status 200 - ok
        rescue StandardError=>e
         head :internal_server_error # return http status 500 - internal server error
        end
-
     end
-
   end
 
   private
@@ -55,5 +52,4 @@ class InboundController < ApplicationController
 
   end
 
-    
 end
