@@ -9,22 +9,17 @@ class InboundController < ApplicationController
   require 'mail'
   skip_before_filter :verify_authenticity_token
 
-  def create #not sure if it should be a class method??
+  def create
     Rails.logger.info params.inspect
 
-    # sender1 = "Ticket+68@redlantern.com"
+    # sender1 = "Ticket+70@redlantern.com"
     # if sender1.start_with?("Ticket")
 
     if params[:headers]['From'].start_with?("Ticket")
       get_ticket_id(params[:headers]['From'])
       # get_ticket_id(sender1)
       @ticket = Ticket.find @ticket_id
-      
-      if @ticket.replies.create(sender: @ticket.sender, body: @ticket.body)
-        head :ok
-      else
-        Rails.logger.info ticket.errors.inspect
-      end
+      create_replies(@ticket.sender,@ticket.body)
 
     else
       ticket = Ticket.new(
@@ -32,21 +27,31 @@ class InboundController < ApplicationController
         subject: params[:headers]['Subject'], 
         body: params[:plain]
       )
-        if ticket.save
-          head :ok # return http status 200 - ok
-        else
-          Rails.logger.info ticket.errors.inspect
-          head :internal_server_error # return http status 500 - internal server error
-        end
+       
+       begin
+        ticket.save
+        head :ok # return http status 200 - ok
+       rescue StandardError=>e
+        head :internal_server_error # return http status 500 - internal server error
+       end
+
     end
 
   end
 
   private
 
+  def create_replies(sender,body)
+    begin
+      @ticket.replies.create(sender: @ticket.sender, body: @ticket.body)
+      head :ok
+    rescue StandardError=>e
+    end
+  end
+
   def get_ticket_id sender
-    partial = sender.split('@')[0]
-    @ticket_id = partial.split('+')[1]
+    partial = sender.split('@').first
+    @ticket_id = partial.split('+').last
 
   end
 
