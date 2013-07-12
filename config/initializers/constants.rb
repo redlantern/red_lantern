@@ -1,6 +1,6 @@
-SENDER_TICKET = "ticket@redlantern.com"
+SENDER_TICKET = "ticket@laantern.com"
 SUPPORT_TEAM = 	"yiingshan@gmail.com, chris@codesoda.com, rachelle.lequesne@gmail.com"
-SENDER_CUSTOMER = "support@redlantern.com"
+SENDER_CUSTOMER = "support@laantern.com"
 
 STATUS_NEW = "New"
 STATUS_WORK = "Working"

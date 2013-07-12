@@ -12,44 +12,55 @@ class InboundController < ApplicationController
   def create
     Rails.logger.info params.inspect
 
-    # sender1 = "Ticket+70@laantern.com"
-    # if sender1.start_with?("Ticket")
+    #sender1 = "Ticket+70@laantern.com"
+    #if sender1.start_with?("Ticket")
 
-    if params[:headers]['From'].start_with?("Ticket") && params[:headers]['From'].end_with?("laantern.com")
-      get_ticket_id(params[:headers]['From'])
+    sender, subject, body = extract_params
+
+    if is_reply? sender
+      ticket_id = get_ticket_id sender
       # get_ticket_id(sender1)
-      @ticket = Ticket.find @ticket_id
-      create_replies(@ticket.sender,@ticket.body)
-
+      ticket = Ticket.find ticket_id
+      if create_replies ticket
+        head :ok
+      else
+       head :internal_server_error # return http status 500 - internal server error 
+      end
     else
-      ticket = Ticket.new(
-        sender: params[:headers]['From'], 
-        subject: params[:headers]['Subject'], 
-        body: params[:plain]
-      )
-       begin
-        ticket.save
+      ticket = Ticket.new sender: sender, subject: subject, body: body
+      if ticket.save
         head :ok # return http status 200 - ok
-       rescue StandardError=>e
+      else
         head :internal_server_error # return http status 500 - internal server error
-       end
+      end
     end
   end
 
   private
 
-  def create_replies(sender,body)
-    begin
-      @ticket.replies.create(sender: @ticket.sender, body: @ticket.body)
-      head :ok
-    rescue StandardError=>e
+  def extract_params
+    [ params[:headers]['From'],
+      params[:headers]['Subject'],
+      params[:plain] ]
+  end
+
+  def is_reply? sender
+    if match = sender.match(/(?:<(.+)>)/)
+      sender = match[1]
     end
+    ticket_account,ticket_domain = SENDER_TICKET.downcase.split("@")
+    account,domain = sender.downcase.split('@')
+    #raise "#{ticket_account} = #{account}, #{ticket_domain} = #{domain}"
+    account.split("+").first == ticket_account && domain == ticket_domain
+  end
+
+  def create_replies ticket
+    ticket.replies.create sender: ticket.sender, body: ticket.body
   end
 
   def get_ticket_id sender
     partial = sender.split('@').first
-    @ticket_id = partial.split('+').last
-
+    partial.split('+').last
   end
 
 end
