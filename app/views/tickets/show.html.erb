@@ -17,10 +17,15 @@
 </p>
 
 <p>
-  <b>Body:</b>
   <%= @ticket.body %>
 </p>
-
+<hr />
+<% @ticket.replies.each do |reply| %>
+	<div>
+		<%= reply.created_at %>, <%= reply.sender %> <br /> <%= simple_format reply.body %>
+	</div>
+	<hr />
+<% end %>
 
 <%= link_to 'Edit', edit_ticket_path(@ticket) %> |
 <%= link_to 'Back', tickets_path %>

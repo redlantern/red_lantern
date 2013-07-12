@@ -1,11 +1,9 @@
 RedLantern::Application.routes.draw do
   resources :tickets
-  resources :incoming_mail
-
-  root :to => "tickets#index"
-
   match "/inbound" => "inbound#create"
   
+  root :to => "tickets#index"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

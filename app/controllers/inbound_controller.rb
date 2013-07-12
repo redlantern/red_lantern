@@ -21,7 +21,7 @@ class InboundController < ApplicationController
       ticket_id = get_ticket_id sender
       # get_ticket_id(sender1)
       ticket = Ticket.find ticket_id
-      if create_replies ticket
+      if create_replies ticket, sender, body
         head :ok
       else
        head :internal_server_error # return http status 500 - internal server error 
@@ -54,8 +54,8 @@ class InboundController < ApplicationController
     account.split("+").first == ticket_account && domain == ticket_domain
   end
 
-  def create_replies ticket
-    ticket.replies.create sender: ticket.sender, body: ticket.body
+  def create_replies ticket, sender, body
+    ticket.replies.create sender: sender, body: body
   end
 
   def get_ticket_id sender
