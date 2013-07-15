@@ -5,6 +5,6 @@ Laantern is a simple helpdesk which is based on emails. It has the following fea
 
 Laantern provides simple, effective help using methods people are familiar with and not getting in the way of people doing their jobs.
 
-The app is available at www.laantern.com
+Visit the app at www.laantern.com 
 
 
