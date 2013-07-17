@@ -1,5 +1,6 @@
 RedLantern::Application.routes.draw do
   resources :tickets
+  
   match "/inbound" => "inbound#create"
   
   root :to => "tickets#index"

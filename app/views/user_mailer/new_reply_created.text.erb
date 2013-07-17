@@ -1,0 +1,17 @@
+Ticket <%= @ticket.id %> has been updated.
+---------------------------------------------
+Subject: <%= @ticket.subject %>
+View Online: <%= ticket_url(@ticket) %>
+
+
+<% @ticket.replies.each do |reply| %>
+----------------------------------------------
+<%= reply.created_at %>  <%= reply.sender %>
+<%= reply.body %>
+
+<% end %>
+
+==============================================
+
+<%= @ticket.created_at %>  <%= @ticket.sender %>
+<%= @ticket.body %>
