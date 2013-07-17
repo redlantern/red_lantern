@@ -11,6 +11,18 @@ gem 'mail'
 group :development, :test do
 	gem 'quiet_assets'
 	gem 'pry'
+	gem 'rspec-rails'
+	gem 'faker'
+	gem 'factory_girl_rails'
+	gem 'guard-rspec'
+end
+
+group :test do
+  gem 'capybara'
+  gem 'poltergeist'
+  gem 'database_cleaner'
+  gem 'shoulda-matchers'
+  gem 'simplecov', require: false
 end
 
 # Gems used only for assets and not required

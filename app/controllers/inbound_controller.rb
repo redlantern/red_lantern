@@ -12,22 +12,17 @@ class InboundController < ApplicationController
   def create
     Rails.logger.info params.inspect
 
-    #sender1 = "Ticket+70@laantern.com"
-    #if sender1.start_with?("Ticket")
+    reader = MailReader.new params
 
-    sender, subject, body = extract_params
-
-    if is_reply? sender
-      ticket_id = get_ticket_id sender
-      # get_ticket_id(sender1)
-      ticket = Ticket.find ticket_id
-      if create_replies ticket, sender, body
+    if reader.is_reply?
+      ticket = Ticket.find reader.ticket_id
+      if create_replies ticket, reader.from, reader.body
         head :ok
       else
        head :internal_server_error # return http status 500 - internal server error 
       end
     else
-      ticket = Ticket.new sender: sender, subject: subject, body: body
+      ticket = Ticket.new sender: reader.from, subject: reader.subject, body: reader.body
       if ticket.save
         head :ok # return http status 200 - ok
       else
@@ -38,29 +33,9 @@ class InboundController < ApplicationController
 
   private
 
-  def extract_params
-    [ params[:headers]['From'],
-      params[:headers]['Subject'],
-      params[:plain] ]
-  end
-
-  def is_reply? sender
-    if match = sender.match(/(?:<(.+)>)/)
-      sender = match[1]
-    end
-    ticket_account,ticket_domain = SENDER_TICKET.downcase.split("@")
-    account,domain = sender.downcase.split('@')
-    #raise "#{ticket_account} = #{account}, #{ticket_domain} = #{domain}"
-    account.split("+").first == ticket_account && domain == ticket_domain
-  end
-
   def create_replies ticket, sender, body
     ticket.replies.create sender: sender, body: body
   end
 
-  def get_ticket_id sender
-    partial = sender.split('@').first
-    partial.split('+').last
-  end
 
 end
