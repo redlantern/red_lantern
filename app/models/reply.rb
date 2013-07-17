@@ -7,7 +7,7 @@ class Reply < ActiveRecord::Base
 private
 
   def alert_users_replied
-  	UserMailer.new_ticket_created(ticket.id).deliver
+  	UserMailer.new_reply_created(ticket.id).deliver
   end
 
   def set_status
