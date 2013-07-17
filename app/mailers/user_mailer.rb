@@ -6,6 +6,11 @@ class UserMailer < ActionMailer::Base
     mail(from: sender_email_for(@ticket), subject: "Ticket ##{@ticket.id}: #{@ticket.subject}")
   end
 
+  def new_reply_created ticket_id
+    @ticket = Ticket.find ticket_id
+    mail(from: sender_email_for(@ticket), subject: "Ticket ##{@ticket.id}: #{@ticket.subject}")
+  end
+
   private
 
   def sender_email_for ticket
