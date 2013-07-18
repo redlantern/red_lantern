@@ -20,6 +20,11 @@
   <%= @ticket.body %>
 </p>
 
+<% unless @ticket.replies.blank? %>
+ <%= render 'replies/reply' %>
+<% end %>
+
+
 <hr />
 <% @ticket.replies.each do |reply| %>
 	<div>

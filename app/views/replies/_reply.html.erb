@@ -1,0 +1,10 @@
+<%= form_for(@replies, url: ticket_replies_path) do |f| %>
+  <%= f.label :reply %><br />
+  <%= f.text_area :body %><br />
+
+  <%= f.label :sender %><br />
+  <%= f.text_field :sender %><br />
+
+  <%= f.submit "Submit Reply" %><br />
+
+  <% end %>
