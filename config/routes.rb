@@ -3,7 +3,7 @@ RedLantern::Application.routes.draw do
   resources :tickets do
     resources :replies, only: [:create]
   end
-  
+    
   match "/inbound" => "inbound#create"
   
   root :to => "tickets#index"
