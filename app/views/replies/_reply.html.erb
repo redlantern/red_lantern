@@ -1,4 +1,4 @@
-<%= form_for(@replies, url: ticket_replies_path) do |f| %>
+<%= form_for(@reply, url: ticket_replies_path(@ticket)) do |f| %>
   <%= f.label :reply %><br />
   <%= f.text_area :body %><br />
 

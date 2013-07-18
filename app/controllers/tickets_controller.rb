@@ -15,7 +15,8 @@ class TicketsController < ApplicationController
   # GET /tickets/1.json
   def show
     @ticket = Ticket.find(params[:id])
-    @replies = @ticket.replies
+    @reply = @ticket.replies.build
+    session[:id] = params[:id]
 
     respond_to do |format|
       format.html # show.html.erb

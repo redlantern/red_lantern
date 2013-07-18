@@ -1,12 +1,13 @@
 class RepliesController < ApplicationController
 	def create
-		@ticket = Ticket.find(params[:id])
-	    @replies = @ticket.replies
+
+		@ticket = Ticket.find(session[:id])
+	    @replies = @ticket.replies.build(params[:reply])
 
 	    respond_to do |format|
 	      if @replies.save
-	        format.html 
-	        format.json { render json: @ticket }
+	      	#can't redirect to @ticket
+	        redirect_to @ticket
 	      else
 	        format.html { render action: "new" }
 	        format.json { render json: @ticket.errors, status: :unprocessable_entity }
@@ -14,7 +15,4 @@ class RepliesController < ApplicationController
 	    end
 	end
 
-	def new
-		
-	end
 end
