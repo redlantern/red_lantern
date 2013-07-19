@@ -35,7 +35,7 @@ class InboundController < ApplicationController
 
   def create_replies ticket, sender, body
     actual_body = body.split(REPLY_ABOVE_THIS_LINE)[0]
-    ticket.replies.create sender: sender, body: body
+    ticket.replies.create sender: sender, body: actual_body
   end
 
 
