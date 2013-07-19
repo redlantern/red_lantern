@@ -12,8 +12,8 @@ private
   end
 
   def set_status
-	ticket.status = STATUS_WORK	
-	ticket.save!
+	  ticket.status = STATUS_WORK	
+	  ticket.save!
   end
 
 end
