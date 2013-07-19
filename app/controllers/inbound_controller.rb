@@ -34,10 +34,10 @@ class InboundController < ApplicationController
   private
 
   def create_replies ticket, sender, body
-    actual_body = body.split(REPLY_ABOVE_THIS_LINE)[0]
-    puts body
-    puts body.split(REPLY_ABOVE_THIS_LINE)[0]
-    puts body.split(REPLY_ABOVE_THIS_LINE)[1]
+    # this is messy! Needs tidying up...
+    just_reply_part = body.split(REPLY_ABOVE_THIS_LINE)[0]
+    line_by_line = just_reply_part.split("\n")
+    actual_body = line_by_line[0..line_by_line.length-2].join("\n")
     ticket.replies.create sender: sender, body: actual_body
   end
 
