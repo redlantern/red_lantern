@@ -14,7 +14,6 @@ let(:params)do
 			'Subject' => subject
 		}, 
 		plain: body
-
 	}
 end
 
@@ -22,11 +21,11 @@ let(:reader){ MailReader.new params }
 
  it "can be instantiated" do
 	reader.should_not be_nil
- end	
+ end
 
- context "data" do
+context "data" do
  	it "returns the from" do
- 		reader.from.should == from 
+ 		reader.from.should == from
  	end
 
  	it "returns the subject" do
@@ -62,7 +61,7 @@ let(:reader){ MailReader.new params }
  	end
 
  	it "should return a ticket id if it is a reply" do
- 		params[:headers]['To'] = "ticket+10@laantern.com" 		
+ 		params[:headers]['To'] = "ticket+10@laantern.com"
  		reader.ticket_id.should eq(10)
  	end
 
