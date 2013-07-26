@@ -7,6 +7,7 @@ gem 'rails', '3.2.13'
 
 gem 'pg'
 gem 'mail'
+gem 'griddler'
 
 group :development, :test do
 	gem 'quiet_assets'
