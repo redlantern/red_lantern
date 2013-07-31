@@ -5,8 +5,8 @@ RedLantern::Application.routes.draw do
     resources :replies, only: [:create]
   end
 
-  #match "/inbound" => "inbound#create"
-  post '/inbound' => 'griddler/emails#create'
+  match "/inbound" => "inbound#create"
+  # post '/inbound' => 'griddler/emails#create'
   #mount_griddler('/inbound')
 
   root :to => "tickets#index"
