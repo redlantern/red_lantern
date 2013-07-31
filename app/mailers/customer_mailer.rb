@@ -5,6 +5,7 @@ class CustomerMailer < ActionMailer::Base
     @reply = Reply.find reply_id
     @ticket = @reply.ticket
     mail(to: @ticket.sender, subject: "[#{@ticket.id}] #{@ticket.subject}")
+
   end
 
 end

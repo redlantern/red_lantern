@@ -39,7 +39,6 @@ class InboundController < ApplicationController
     only_reply = just_reply_part.split(/On.*wrote:/).first
     # line_by_line = just_reply_part.split("\n")
     # actual_body = line_by_line[0..line_by_line.length-5].join("\n")
-
     ticket.replies.create sender: sender, body: only_reply
   end
 
