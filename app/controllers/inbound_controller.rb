@@ -13,14 +13,14 @@ class InboundController < ApplicationController
     Rails.logger.info params.inspect
 
     reader = MailReader.new params
-
-    if reader.is_reply?
+    if reader.is_reply? || reader.is_customer_reply?
       ticket = Ticket.find reader.ticket_id
       if create_replies ticket, reader.from, reader.body
         head :ok
       else
        head :internal_server_error # return http status 500 - internal server error 
       end
+          
     else
       ticket = Ticket.new sender: reader.from, subject: reader.subject, body: reader.body
       if ticket.save
