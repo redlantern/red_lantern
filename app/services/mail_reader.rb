@@ -33,7 +33,7 @@ class MailReader
 	end
 
 	def ticket_id
-	  if is_reply?
+	  if is_internal_reply?
 		  partial = to.split('@').first
 		  partial.split('+').last.to_i
 	  else
