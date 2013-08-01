@@ -40,8 +40,6 @@ class MailReader
 	  	 match = subject.match(/\[([0-9]+)\]/)
 	  	 match[1]
 	  end
-<<<<<<< HEAD
-
 	end
 
 	def is_customer_reply?
@@ -50,8 +48,6 @@ class MailReader
 		  else
 		  	true
 		  end
-=======
->>>>>>> master
 	end
 
 end
