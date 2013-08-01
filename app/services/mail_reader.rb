@@ -21,7 +21,7 @@ class MailReader
  	end
 
 
-	def is_reply?
+	def is_internal_reply?
 	  recipient = to
 
 	  if match = recipient.match(/<(.+)>/)
@@ -36,17 +36,10 @@ class MailReader
 	  if is_reply?
 		  partial = to.split('@').first
 		  partial.split('+').last.to_i
-	  end
-
-	  if is_customer_reply?
+	  else
 	  	 match = subject.match(/\[([0-9]+)\]/)
 	  	 match[1]
 	  end
-
-	end
-
-	def is_customer_reply?
-		  to.eql? SENDER_CUSTOMER
 	end
 
 end
