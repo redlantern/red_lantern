@@ -6,7 +6,11 @@ class InboundController < ApplicationController
   def create
 
     reader = MailReader.new params
+<<<<<<< HEAD
     if reader.is_internal_reply? || reader.is_customer_reply?
+=======
+    if reader.is_internal_reply?
+>>>>>>> master
       ticket = Ticket.find reader.ticket_id
       reply_ticket_status ticket, reader.from, reader.body
     else
@@ -24,14 +28,33 @@ class InboundController < ApplicationController
       else
        head :internal_server_error # return http status 500 - internal server error 
       end
+<<<<<<< HEAD
     end
 
     def new_ticket_status from, subject, body
       ticket = Ticket.new sender: from, subject: subject, body: body
       if ticket.save
         head :ok # return http status 200 - ok
+=======
+    else
+      # email is from a customer
+      if reader.ticket_id.nil?
+        # this is a brand-new email from the customer so create a new ticket
+        ticket = Ticket.new sender: reader.from, subject: reader.subject, body: reader.body
+        if ticket.save
+          head :ok # return http status 200 - ok
+        else
+          head :internal_server_error # return http status 500 - internal server error
+        end
+>>>>>>> master
       else
-        head :internal_server_error # return http status 500 - internal server error
+        # this email is a reply to an existing ticket so create a reply
+        ticket = Ticket.find reader.ticket_id
+        if create_replies ticket, reader.from, reader.body
+          head :ok
+        else
+          head :internal_server_error # return http status 500 - internal server error 
+        end
       end
     end
 

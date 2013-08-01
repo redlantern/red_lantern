@@ -40,6 +40,7 @@ class MailReader
 	  	 match = subject.match(/\[([0-9]+)\]/)
 	  	 match[1]
 	  end
+<<<<<<< HEAD
 
 	end
 
@@ -49,6 +50,8 @@ class MailReader
 		  else
 		  	true
 		  end
+=======
+>>>>>>> master
 	end
 
 end
