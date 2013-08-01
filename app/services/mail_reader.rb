@@ -21,7 +21,7 @@ class MailReader
  	end
 
 
-	def is_reply?
+	def is_internal_reply?
 	  recipient = to
 
 	  if match = recipient.match(/<(.+)>/)
@@ -33,12 +33,10 @@ class MailReader
 	end
 
 	def ticket_id
-	  if is_reply?
+	  if is_internal_reply?
 		  partial = to.split('@').first
 		  partial.split('+').last.to_i
-	  end
-
-	  if is_customer_reply?
+	  else
 	  	 match = subject.match(/\[([0-9]+)\]/)
 	  	 match[1]
 	  end
@@ -46,7 +44,11 @@ class MailReader
 	end
 
 	def is_customer_reply?
-		  to.eql? SENDER_CUSTOMER
+		  if subject.match(/\[([0-9]+)\]/).nil?
+		  	false
+		  else
+		  	true
+		  end
 	end
 
 end
