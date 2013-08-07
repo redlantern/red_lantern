@@ -7,11 +7,22 @@ class InboundController < ApplicationController
 
     reader = MailReader.new params
 
-    if reader.is_internal_reply? || reader.is_customer_reply?
+    if reader.is_internal_reply?
+      
       ticket = Ticket.find reader.ticket_id
       reply_ticket_status ticket, reader.from, reader.body
+      UserMailer.new_reply_created(ticket.id).deliver
+
+    elsif reader.is_customer_reply?
+
+      ticket = Ticket.find reader.ticket_id
+      reply_ticket_status ticket, reader.from, reader.body
+      CustomerMailer.new_reply_created(ticket.id).deliver
+
     else
+
       new_ticket_status reader.from, reader.subject, reader.body
+
     end
     
   end

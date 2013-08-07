@@ -2,7 +2,7 @@ class Reply < ActiveRecord::Base
   belongs_to :ticket
   attr_accessible :body, :sender
 
-  after_create :set_status, :alert_users_replied
+  after_create :set_status#, :alert_users_replied
 
 private
 
