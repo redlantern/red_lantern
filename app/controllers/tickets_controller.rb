@@ -3,7 +3,7 @@ class TicketsController < ApplicationController
   # GET /tickets.json
 
   def index
-    @tickets = Ticket.all
+    @tickets = Ticket.order("created_at DESC").all
 
     respond_to do |format|
       format.html # index.html.erb
