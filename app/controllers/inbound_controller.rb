@@ -12,6 +12,7 @@ class InboundController < ApplicationController
       ticket = Ticket.find reader.ticket_id
       reply_ticket_status ticket, reader.from, reader.body
       UserMailer.new_reply_created(ticket.id).deliver
+      CustomerMailer.new_reply_created(ticket.id).deliver
 
     elsif reader.is_customer_reply?
 
