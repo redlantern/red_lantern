@@ -43,11 +43,11 @@ class MailReader
 	end
 
 	def is_customer_reply?
-		  if subject.match(/\[([0-9]+)\]/).nil?
-		  	false
-		  else
-		  	true
-		  end
+		if subject.match(/\[([0-9]+)\]/).nil?
+			false
+		else
+			true
+		end
 	end
 
 end
