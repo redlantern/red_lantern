@@ -1,0 +1,11 @@
+<p><%= REPLY_ABOVE_THIS_LINE %></p>
+<p>A new ticket has been created. Please see below for details.</p>
+<hr />
+
+<p>Sender: <%= @ticket.sender %></p>
+<p>Subject: <%= @ticket.subject %></p>
+<hr />
+
+<p><%= @ticket.body %></p>
+
+<p>View Online: <%= ticket_url(@ticket) %></p>
