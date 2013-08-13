@@ -1,8 +1,6 @@
 <p>Ticket <%= @ticket.id %> has been updated. Please see below for details.</p>
 <p>Subject: <%= @ticket.subject %></p>
 <p>View Online: <%= ticket_url(@ticket) %></p>
-<hr />
-
 
 <% @ticket.replies.each do |reply| %>
 <hr />
