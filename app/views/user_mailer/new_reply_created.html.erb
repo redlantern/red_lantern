@@ -3,11 +3,11 @@
 <p>View Online: <%= ticket_url(@ticket) %></p>
 
 <% @ticket.replies.each do |reply| %>
-<hr />
-<p>Response from : <%= reply.sender %>,</p>
-<p>Created at    : <%= reply.created_at %></p>
+	<hr />
+	<p>Response from : <%= reply.sender %>,</p>
+	<p>Created at    : <%= reply.created_at %></p>
 
-<p><%= reply.body %></p>
+	<p><%= reply.body %></p>
 
 <% end %>
 

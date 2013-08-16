@@ -34,11 +34,9 @@ ActiveRecord::Schema.define(:version => 20130710015457) do
     t.string   "sender"
     t.string   "subject"
     t.text     "body"
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.string   "status"
-    t.string   "ticket_id"
-    t.integer  "ticket_number", :default => 1
   end
 
 end

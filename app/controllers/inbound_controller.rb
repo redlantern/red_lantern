@@ -10,15 +10,19 @@ class InboundController < ApplicationController
     if reader.is_internal_reply?
       
       ticket = Ticket.find reader.ticket_id
-      reply_ticket_status ticket, reader.from, reader.body
-      UserMailer.new_reply_created(ticket.id).deliver
-      CustomerMailer.new_reply_created(ticket.id).deliver
+      
+      if reply_ticket_status ticket, reader.from, reader.body
+        UserMailer.new_reply_created(ticket.id).deliver
+        CustomerMailer.new_reply_created(ticket.id).deliver
+      end
 
     elsif reader.is_customer_reply?
 
       ticket = Ticket.find reader.ticket_id
-      reply_ticket_status ticket, reader.from, reader.body
-      UserMailer.new_reply_created(ticket.id).deliver
+      
+      if reply_ticket_status ticket, reader.from, reader.body
+        UserMailer.new_reply_created(ticket.id).deliver
+      end
 
     else
 
@@ -32,10 +36,12 @@ class InboundController < ApplicationController
   private
 
     def reply_ticket_status ticket, from, body 
-      if create_replies ticket, from, body
+      reply = create_replies ticket, from, body
+
+      if reply.valid?
         head :ok
       else
-       head :internal_server_error # return http status 500 - internal server error 
+        head :unprocessable_entity # return http status 422
       end
 
     end
@@ -45,16 +51,19 @@ class InboundController < ApplicationController
       if ticket.save
         head :ok # return http status 200 - ok
       else
-          head :internal_server_error # return http status 500 - internal server error 
+        head :unprocessable_entity # return http status 422
       end
     end
 
     def create_replies ticket, sender, body
       # this is messy! Needs tidying up...
-      just_reply_part = body.split(REPLY_ABOVE_THIS_LINE)[0]
-      only_reply = just_reply_part.split(/On.*wrote:/).first
-      # line_by_line = just_reply_part.split("\n")
-      # actual_body = line_by_line[0..line_by_line.length-5].join("\n")
+
+      unless body.nil?
+        just_reply_part = body.split(REPLY_ABOVE_THIS_LINE)[0]
+        only_reply = just_reply_part.split(/On.*wrote:/).first
+        # line_by_line = just_reply_part.split("\n")
+        # actual_body = line_by_line[0..line_by_line.length-5].join("\n")
+      end
       ticket.replies.create sender: sender, body: only_reply
     end
 end

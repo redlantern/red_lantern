@@ -3,7 +3,7 @@ class Ticket < ActiveRecord::Base
 
   has_many :replies
 
-  validates :body, :sender, :status, :subject, presence: true
+  validates :body, :sender, :status, presence: true
 
   before_validation :set_defaults
 
