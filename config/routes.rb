@@ -1,5 +1,7 @@
 RedLantern::Application.routes.draw do
 
+  devise_for :users
+
   resources :tickets do
     resources :replies, only: [:create]
   end

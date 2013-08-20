@@ -8,6 +8,7 @@ gem 'rails', '3.2.13'
 gem 'pg'
 gem 'mail'
 gem 'griddler'
+gem "devise", "~> 3.0.3"
 
 group :development, :test do
 	gem 'quiet_assets'
