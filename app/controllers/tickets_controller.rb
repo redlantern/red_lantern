@@ -1,4 +1,4 @@
-class TicketsController < ApplicationController
+class TicketsController < SecureController
   # GET /tickets
   # GET /tickets.json
 
