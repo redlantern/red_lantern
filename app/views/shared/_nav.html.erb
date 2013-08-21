@@ -1,0 +1,64 @@
+<div class="nav-collapse" id="sidebar">
+  <ul class="nav nav-list">
+    <li>
+      <form class="search-form" method="get" target="#">
+        <span class="search-pan"><button type="submit">
+          <span class="search-pan"><em class="icon-search"></em></span>
+          <input autocomplete="off" name="search" placeholder="Search ..." type="text"></button>
+        </span>
+      </form>
+    </li>
+
+    <li class="active">
+      <a href="index.html"><em class="icon-dashboard"></em>
+      <span>Dashboard</span></a>
+    </li>
+
+    <li>
+      <%= link_to tickets_path do %>
+        <em class="icon-text-width"></em>
+        <span>Unassigned</span>
+      <% end %>
+    </li>
+
+    <li>
+      <%= link_to tickets_path do %>
+        <em class="icon-text-width"></em>
+        <span>Mine</span>
+      <% end %>
+    </li>
+
+    <li>
+      <%= link_to tickets_path do %>
+        <em class="icon-text-width"></em>
+        <span>Draft</span>
+      <% end %>
+    </li>
+
+    <li>
+      <%= link_to tickets_path do %>
+        <em class="icon-text-width"></em>
+        <span>Assigned</span>
+      <% end %>
+    </li>
+
+    <li>
+      <%= link_to tickets_path do %>
+        <em class="icon-text-width"></em>
+        <span>Closed</span>
+      <% end %>
+    </li>
+
+    <li>
+      <%= link_to tickets_path do %>
+        <em class="icon-text-width"></em>
+        <span>Spam</span>
+      <% end %>
+    </li>
+
+  </ul>
+
+  <div class="visible-desktop" id="sidebar-collapse">
+    <em class="icon-double-angle-left"></em>
+  </div>
+</div>
