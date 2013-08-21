@@ -1,9 +1,223 @@
 <% if user_signed_in? %>
-<header>
-	<%= link_to "Laantern", root_path %>
-	<span>Welcome Back <%= link_to current_user.display_name, edit_user_registration_path %></span>
-	<%= link_to "Log Out", destroy_user_session_path, method: :delete %>
-</header>
-<% else %>
-<h1>Sorry, you don't belong here</h1>
-<% end %>
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Laantern</title>
+  </head>
+
+  <body>
+    <div class="navbar" id="navbar">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <%= link_to root_path, class: "brand" do %>
+            <small><em class="icon-desktop"></em> Laantern</small>
+          <% end %>
+          <a class="btn-navbar collapsed" data-target=".nav-collapse" data-toggle="collapse" href="#"><em class="icon-reorder"></em></a>
+
+          <ul class="nav flaty-nav pull-right">
+            <li class="hidden-phone">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#"><em class="icon-tasks"></em>
+                <span class="badge badge-warning">4</span>
+              </a>
+
+              <ul class="pull-right dropdown-navbar dropdown-menu">
+                <li class="nav-header"><em class="icon-ok"></em> 4 Tasks to complete</li>
+
+                <li>
+                  <a href="#">
+                  <div class="clearfix">
+                    <span class="pull-left">Software Update</span> <span class="pull-right">75%</span>
+                  </div>
+
+                  <div class="progress progress-mini progress-warning">
+                    <div class="bar" style="width:75%"></div>
+                  </div></a>
+                </li>
+
+                <li>
+                  <a href="#">
+                  <div class="clearfix">
+                    <span class="pull-left">Transfer To New Server</span>
+                    <span class="pull-right">45%</span>
+                  </div>
+
+                  <div class="progress progress-mini progress-danger">
+                    <div class="bar" style="width:45%"></div>
+                  </div></a>
+                </li>
+
+                <li>
+                  <a href="#">
+                  <div class="clearfix">
+                    <span class="pull-left">Bug Fixes</span> <span class="pull-right">20%</span>
+                  </div>
+
+                  <div class="progress progress-mini">
+                    <div class="bar" style="width:20%"></div>
+                  </div></a>
+                </li>
+
+                <li>
+                  <a href="#">
+                  <div class="clearfix">
+                    <span class="pull-left">Writing Documentation</span>
+                    <span class="pull-right">85%</span>
+                  </div>
+
+                  <div class="progress progress-mini progress-success progress-striped active">
+                  <div class="bar" style="width:85%"></div>
+                  </div></a>
+                </li>
+
+                <li class="more">
+                  <a href="#">See tasks with details</a>
+                </li>
+              </ul>
+            </li><!-- /.hidden-phone -->
+
+            <li class="hidden-phone">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                <em class="icon-bell-alt"></em>
+                <span class="badge badge-important">5</span>
+              </a>
+
+              <ul class="dropdown-navbar dropdown-menu">
+                <li class="nav-header"><em class="icon-warning-sign"></em> 5 Notifications</li>
+
+                <li class="notify">
+                  <a href="#"><em class="icon-comment orange"></em>
+                  <p>New Comments</p><span class="badge badge-warning">4</span></a>
+                </li>
+
+                <li class="notify">
+                  <a href="#"><em class="icon-twitter blue"></em>
+                  <p>New Twitter followers</p><span class="badge badge-info">7</span></a>
+                </li>
+
+                <li class="notify">
+                  <a href="#"><img alt="Alex" src="img/demo/avatar/avatar2.jpg">
+                  <p>David would like to become moderator.</p></a>
+                </li>
+
+                <li class="notify">
+                  <a href="#"><em class="icon-bug pink"></em>
+                  <p>New bug in program!</p></a>
+                </li>
+
+                <li class="more">
+                  <a href="#">See all notifications</a>
+                </li>
+              </ul>
+            </li><!-- /.hidden-phone -->
+
+            <li class="hidden-phone">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                <em class="icon-envelope"></em> <span class="badge badge-success">3</span>
+              </a>
+
+              <ul class="dropdown-navbar dropdown-menu">
+                <li class="nav-header"><em class="icon-comments"></em> 3 Messages</li>
+
+                <li class="msg">
+                  <a href="#"><img alt="Sarah's Avatar" src="img/demo/avatar/avatar3.jpg">
+
+                  <div>
+                    <span class="msg-title">Sarah</span>
+                    <span class="msg-time">
+                      <em class="icon-time"></em>
+                      <span>a moment ago</span>
+                    </span>
+                  </div>
+
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                  sed do eiusmod tempor incididunt ut labore et dolore magna
+                  aliqua.</p></a>
+                </li>
+
+                <li class="msg">
+                  <a href="#"><img alt="Emma's Avatar" src="img/demo/avatar/avatar4.jpg">
+
+                  <div>
+                    <span class="msg-title">Emma</span> <span class=
+                    "msg-time"><em class="icon-time"></em> <span>2 Days ago</span></span>
+                  </div>
+
+                  <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris ...</p></a>
+                </li>
+
+                <li class="msg">
+                  <a href="#"><img alt="John's Avatar" src="img/demo/avatar/avatar5.jpg">
+
+                  <div>
+                    <span class="msg-title">John</span>
+                    <span class="msg-time"><em class="icon-time"></em>
+                      <span>8:24 PM</span>
+                    </span>
+                  </div>
+
+                  <p>Duis aute irure dolor in reprehenderit in ...</p></a>
+                </li>
+
+                <li class="more">
+                  <a href="#">See all messages</a>
+                </li>
+              </ul>
+            </li><!-- /.hidden-phone -->
+
+            <li class="user-profile">
+              <a class="user-menu dropdown-toggle" data-toggle="dropdown" href="#">
+                <img alt="Penny's Photo" class="nav-user-photo" src="img/demo/avatar/avatar1.jpg">
+                <span class="hidden-phone" id="user_info"><%= current_user.display_name %></span>
+                <em class="icon-caret-down"></em>
+              </a>
+
+              <ul class="dropdown-menu dropdown-navbar" id="user_menu">
+                <li class="nav-header"><em class="icon-time"></em> Logined From 20:45</li>
+
+                <li><a href="#"><em class="icon-cog"></em> Account Settings</a></li>
+
+                <li>
+                  <%= link_to edit_user_registration_path do %>
+                    <em class="icon-user"></em> Edit Profile
+                  <% end %>
+                </li>
+
+                <li><a href="#"><em class="icon-question"></em> Help</a></li>
+
+                <li class="divider visible-phone"></li>
+
+                <li class="visible-phone">
+                  <a href="#"><em class="icon-tasks"></em> Tasks <span class="badge badge-warning">4</span></a>
+                </li>
+
+                <li class="visible-phone">
+                  <a href="#"><em class="icon-bell-alt"></em> Notifications
+                  <span class="badge badge-important">8</span></a>
+                </li>
+
+                <li class="visible-phone">
+                  <a href="#"><em class="icon-envelope"></em> Messages
+                  <span class="badge badge-success">5</span></a>
+                </li>
+
+                <li class="divider"></li>
+
+                <li>
+                  <%= link_to destroy_user_session_path, method: :delete do %>
+                   <em class="icon-off"></em> Logout
+                  <% end %>
+                </li>
+              </ul>
+            </li><!-- /.user-profile -->
+          </ul><!-- /.nav flaty-nav pull-right -->
+        </div><!-- /.container-fluid -->
+      </div><!-- /.navbar-inner -->
+    </div><!-- /.navbar -->
+
+    <header>
+      <span>Welcome Back</span>
+    </header>
+    <% end %>
+  </body>
+</html>
