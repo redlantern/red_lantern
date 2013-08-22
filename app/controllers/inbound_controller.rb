@@ -7,21 +7,26 @@ class InboundController < ApplicationController
 
     reader = MailReader.new params
 
-    if reader.is_internal_reply?
-      
+    ticket = nil
+    if reader.ticket_id
       ticket = Ticket.find reader.ticket_id
       
-      if reply_ticket_status ticket, reader.from, reader.body
-        UserMailer.new_reply_created(ticket.id).deliver
-        CustomerMailer.new_reply_created(ticket.id).deliver
-      end
-
-    elsif reader.is_customer_reply?
-
-      ticket = Ticket.find reader.ticket_id
+      if reader.is_internal_reply? && User.valid_user?(reader.from_email)
       
-      if reply_ticket_status ticket, reader.from, reader.body
-        UserMailer.new_reply_created(ticket.id).deliver
+        if reply_ticket_status ticket, reader.from, reader.body
+          UserMailer.new_reply_created(ticket.id).deliver
+          CustomerMailer.new_reply_created(ticket.id).deliver
+        end
+
+      elsif reader.is_customer_reply? && ticket.is_from?(reader.from_email)
+        
+        if reply_ticket_status ticket, reader.from, reader.body
+          UserMailer.new_reply_created(ticket.id).deliver
+        end
+
+      else
+        # Rails.logger.debug("ignoring...")
+        spam_ticket reader
       end
 
     else
@@ -65,5 +70,9 @@ class InboundController < ApplicationController
         # actual_body = line_by_line[0..line_by_line.length-5].join("\n")
       end
       ticket.replies.create sender: sender, body: only_reply
+    end
+
+    def spam_ticket reader
+      head :not_implemented
     end
 end

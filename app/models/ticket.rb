@@ -9,6 +9,14 @@ class Ticket < ActiveRecord::Base
 
   after_create :alert_users_create
 
+  def is_from? email
+    sender_email = sender
+    if match = sender_email.match(/<(.+)>/)
+      sender_email = match[1]
+    end
+    sender_email == email
+  end
+
   private
 
   def set_defaults
