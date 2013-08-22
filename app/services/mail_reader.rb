@@ -12,6 +12,10 @@ class MailReader
 		@params[:headers]['From']
 	end
 
+	def from_email
+		email_only from
+	end
+
 	def subject
 		@params[:headers]['Subject']
 	end
@@ -22,11 +26,8 @@ class MailReader
 
 
 	def is_internal_reply?
-	  recipient = to
-
-	  if match = recipient.match(/<(.+)>/)
-	    recipient = match[1]
-	  end
+	  recipient = email_only to
+	  
 	  ticket_account,ticket_domain = SENDER_TICKET.downcase.split("@")
 	  account,domain = recipient.downcase.split('@')
 	  account.split("+").first == ticket_account && domain == ticket_domain
@@ -38,7 +39,7 @@ class MailReader
 		  partial.split('+').last.to_i
 	  else
 	  	 match = subject.match(/\[([0-9]+)\]/)
-	  	 match[1]
+	  	 match.nil? ? nil : match[1]
 	  end
 	end
 
@@ -48,6 +49,16 @@ class MailReader
 		else
 			true
 		end
+	end
+
+	private
+
+	def email_only sender
+		recipient = to
+		if match = recipient.match(/<(.+)>/)
+	    	recipient = match[1]
+	    end
+	    recipient
 	end
 
 end
