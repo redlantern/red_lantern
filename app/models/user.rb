@@ -8,7 +8,10 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :first_name, :last_name, :password, :password_confirmation, :remember_me
-  # attr_accessible :title, :body
+
+  def self.all_emails
+    User.pluck(:email).join(", ")
+  end
 
   def display_name
   	first_name.blank? ? "No name" : first_name

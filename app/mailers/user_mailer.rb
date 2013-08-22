@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default to: SUPPORT_TEAM
+  default to: User.all_emails
 
   def new_ticket_created ticket_id
   	@ticket = Ticket.find ticket_id
