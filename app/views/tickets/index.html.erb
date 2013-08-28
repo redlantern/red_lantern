@@ -19,6 +19,7 @@
           <table class="table table-advance dataTable" id="table1" aria-describedby="table1_info">
             <thead>
               <tr role="row">
+                <th></th>
                 <th class="sorting" role="columnheader" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Status: ticket status">Status</th>
                 <th class="sorting" role="columnheader" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Sender: Customer">Sender</th>
                 <th class="sorting" role="columnheader" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Subject: Email subject">Subject</th>
@@ -31,6 +32,7 @@
             <tbody>
               <% @tickets.each do |ticket| %>
                 <tr>
+                  <td></td>
                   <td><%= ticket.status %></td>
                   <td><%= ticket.sender %></td>
                   <td><%= ticket.subject %></td>
