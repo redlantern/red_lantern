@@ -7,44 +7,51 @@
       <div class="box-title">
         <h3><i class="icon-table"></i> Ticket Listing</h3>
         <div class="box-tool">
-        <a data-action="collapse" href="#"><i class="icon-chevron-up"></i></a>
-        <a data-action="close" href="#"><i class="icon-remove"></i></a>
-        </div>
-      </div>
+          <a data-action="collapse" href="#"><i class="icon-chevron-up"></i></a>
+          <a data-action="close" href="#"><i class="icon-remove"></i></a>
+        </div><!-- /.icon-table -->
+      </div><!-- /.box-title -->
 
       <div class="box-content">
 
-        <table class="table">
-          <tr>
-            <th>Status</th>
-            <th>Sender</th>
-            <th>Subject</th>
-            <th>Body</th>
-            <th></th>
-            <th></th>
-            <th></th>
-          </tr>
+        <div class="dataTables_wrapper form-inline" id="table1_wrapper" role="grid">
 
-        <% @tickets.each do |ticket| %>
-          <tr>
-            <td><%= ticket.status %></td>
-            <td><%= ticket.sender %></td>
-            <td><%= ticket.subject %></td>
-            <td><%= truncate ticket.body, length: 50 %></td>
-            <td><%= link_to 'Show', ticket %></td>
-            <td><%= link_to 'Edit', edit_ticket_path(ticket) %></td>
-            <td><%= link_to 'Destroy', ticket, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-          </tr>
-        <% end %>
-        </table>
+          <table class="table table-advance dataTable" id="table1" aria-describedby="table1_info">
+            <thead>
+              <tr role="row">
+                <th class="sorting" role="columnheader" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Status: ticket status">Status</th>
+                <th class="sorting" role="columnheader" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Sender: Customer">Sender</th>
+                <th class="sorting" role="columnheader" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Subject: Email subject">Subject</th>
+                <th class="sorting" role="columnheader" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Body: Email body">Body</th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @tickets.each do |ticket| %>
+                <tr>
+                  <td><%= ticket.status %></td>
+                  <td><%= ticket.sender %></td>
+                  <td><%= ticket.subject %></td>
+                  <td><%= truncate ticket.body, length: 50 %></td>
+                  <td><%= link_to 'Show', ticket %></td>
+                  <td><%= link_to 'Edit', edit_ticket_path(ticket) %></td>
+                  <td><%= link_to 'Destroy', ticket, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
 
-      </div>
+        </div><!-- /.dataTables_wrapper form-inline -->
 
-    </div>
+      </div><!-- /.box-content -->
 
-  </div>
+    </div><!-- /.box -->
 
-</div>
+  </div><!-- /.span12 -->
+
+</div><!-- /.row-fluid -->
 
 <br />
 
